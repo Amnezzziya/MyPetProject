@@ -82,12 +82,43 @@ class PetApp:
         tk.Button(root, text="🎾 Играть", command=self.play_with_pet, width=30).pack(pady=5)
         tk.Button(root, text="🎲 Угадай число", command=self.mini_game, width=30).pack(pady=5)
         tk.Button(root, text="✊ Камень-ножницы-бумага", command=self.rps_game, width=30).pack(pady=5)
+        tk.Button(root, text="⚡ Быстрый клик", command=self.quick_click_game, width=30).pack(pady=5)
         tk.Button(root, text="💾 Сохранить", command=self.save_game, width=30).pack(pady=5)
         tk.Button(root, text="🚪 Выход", command=self.quit_game, width=30).pack(pady=20)
 
         self.update_gui()
         self.auto_hunger_decay()
         self.auto_happiness_decay()
+
+    def quick_click_game(self):
+        # Окно мини-игры
+        game_window = tk.Toplevel(self.root)
+        game_window.title("⚡ Быстрый клик")
+        game_window.geometry("300x200")
+        game_window.resizable(False, False)
+
+        info_label = tk.Label(game_window, text="Нажми кнопку за 1 секунду!", font=("Arial", 12))
+        info_label.pack(pady=10)
+
+        clicked = {"value": False}
+
+        def on_click():
+            clicked["value"] = True
+            self.pet.happiness = min(self.pet.happiness + 2, 10)
+            messagebox.showinfo("Успех", "Ты успел! Питомец счастлив 😊")
+            game_window.destroy()
+            self.update_gui()
+
+        def timeout():
+            if not clicked["value"]:
+                messagebox.showinfo("Упс", "Ты не успел 😢")
+                game_window.destroy()
+                self.update_gui()
+
+
+        click_button = tk.Button(game_window, text="ЖМИ!", font=("Arial", 14), command=on_click)
+        click_button.pack(pady=20)
+        game_window.after(1000, timeout)
 
     def update_gui(self):
         self.status_label.config(text=self.pet.get_status())
