@@ -39,7 +39,7 @@ class Pet:
             "pet_type": self.pet_type,
             "hunger": self.hunger,
             "happiness": self.happiness
-        }
+        } 
 
     @staticmethod
     def from_dict(data):
