@@ -152,6 +152,7 @@ class PetApp:
             self.pet.happiness = min(self.pet.happiness + 3, 10)
             messagebox.showinfo("Победа!", f"Ты угадал! Это было {number}")
         else:
+            self.pet.happiness = min(self.pet.happiness - 2, 10)
             messagebox.showinfo("Мимо", f"Нет, это было {number}")
         self.update_gui()
 
@@ -185,13 +186,13 @@ class PetApp:
         }
 
         if user_choice == bot_choice:
-            self.pet.happiness = min(self.pet.happiness + 1, 10)
+            self.pet.happiness = min(self.pet.happiness + 0, 10)
             result = f"Ничья! Оба выбрали {bot_choice}"
         elif win_map[user_choice] == bot_choice:
             self.pet.happiness = min(self.pet.happiness + 2, 10)
             result = f"Ты победил! {user_choice} бьёт {bot_choice}"
         else:
-            self.pet.happiness = max(self.pet.happiness - 1, 0)
+            self.pet.happiness = max(self.pet.happiness - 2, 0)
             result = f"Ты проиграл. {bot_choice} бьёт {user_choice}"
 
         messagebox.showinfo("Результат", result)
